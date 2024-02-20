@@ -8,11 +8,12 @@
 const int stepPin = 3; 
 const int dirPin = 4; 
  
-void setup() {
+void motorInit() {
   // Sets the two pins as Outputs
   pinMode(stepPin,OUTPUT); 
   pinMode(dirPin,OUTPUT);
 }
+/*
 void loop() {
   digitalWrite(dirPin,HIGH); // Enables the motor to move in a particular direction
   // Makes 200 pulses for making one full cycle rotation
@@ -34,3 +35,29 @@ void loop() {
   }
   delay(1000);
 }
+
+*/
+
+void spinMotor(bool clockwise, int step){
+    if (clockwise){
+        digitalWrite(dirPin,HIGH); 
+        for (int x=0; x<step; x++){
+            digitalWrite(stepPin,HIGH); 
+            delayMicroseconds(100); 
+            digitalWrite(stepPin,LOW); 
+            delayMicroseconds(100); 
+        }
+    }
+
+    else{
+        digitalWrite(dirPin,LOW); 
+        for (int x=0; x<step; x++){
+            digitalWrite(stepPin,HIGH); 
+            delayMicroseconds(100); 
+            digitalWrite(stepPin,LOW); 
+            delayMicroseconds(100); 
+        }
+
+    }
+}
+
