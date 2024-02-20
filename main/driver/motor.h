@@ -4,6 +4,9 @@
  *  
  */
 
+ 
+// https://howtomechatronics.com/tutorials/arduino/how-to-control-stepper-motor-with-a4988-driver-and-arduino/
+
 // defines pins numbers
 const int stepPin = 3; 
 const int dirPin = 4; 
