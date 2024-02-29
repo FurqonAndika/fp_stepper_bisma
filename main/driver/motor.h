@@ -1,66 +1,34 @@
-/*     Simple Stepper Motor Control Exaple Code
- *      
- *  by Dejan Nedelkovski, www.HowToMechatronics.com
- *  
- */
+// https://lastminuteengineers.com/stepper-motor-l298n-arduino-tutorial/
 
- 
-// https://howtomechatronics.com/tutorials/arduino/how-to-control-stepper-motor-with-a4988-driver-and-arduino/
 
-// defines pins numbers
-const int stepPin = 3; 
-const int dirPin = 4; 
- 
+ // Include the Arduino Stepper Library
+#include <Stepper.h>
+
+// Number of steps per output rotation
+const int stepsPerRevolution =200;
+
+// Create Instance of Stepper library
+Stepper myStepper(stepsPerRevolution, 8, 9, 10, 11);
+
 void motorInit() {
-  // Sets the two pins as Outputs
-  pinMode(stepPin,OUTPUT); 
-  pinMode(dirPin,OUTPUT);
+	// set the speed at 60 rpm:
+	myStepper.setSpeed(180);
 }
-/*
-void loop() {
-  digitalWrite(dirPin,HIGH); // Enables the motor to move in a particular direction
-  // Makes 200 pulses for making one full cycle rotation
-  for(int x = 0; x < 200; x++) {
-    digitalWrite(stepPin,HIGH); 
-    delayMicroseconds(500); 
-    digitalWrite(stepPin,LOW); 
-    delayMicroseconds(500); 
+
+
+
+
+
+
+
+
+void spinMotor(bool clockwise, int step) 
+{
+  if (clockwise){
+    myStepper.step(step);
   }
-  delay(1000); // One second delay
-  
-  digitalWrite(dirPin,LOW); //Changes the rotations direction
-  // Makes 400 pulses for making two full cycle rotation
-  for(int x = 0; x < 400; x++) {
-    digitalWrite(stepPin,HIGH);
-    delayMicroseconds(500);
-    digitalWrite(stepPin,LOW);
-    delayMicroseconds(500);
+  else{
+    myStepper.step(-step);
   }
-  delay(1000);
+
 }
-
-*/
-
-void spinMotor(bool clockwise, int step){
-    if (clockwise){
-        digitalWrite(dirPin,HIGH); 
-        for (int x=0; x<step; x++){
-            digitalWrite(stepPin,HIGH); 
-            delayMicroseconds(100); 
-            digitalWrite(stepPin,LOW); 
-            delayMicroseconds(100); 
-        }
-    }
-
-    else{
-        digitalWrite(dirPin,LOW); 
-        for (int x=0; x<step; x++){
-            digitalWrite(stepPin,HIGH); 
-            delayMicroseconds(100); 
-            digitalWrite(stepPin,LOW); 
-            delayMicroseconds(100); 
-        }
-
-    }
-}
-
