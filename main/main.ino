@@ -13,17 +13,21 @@ void setup(){
 int pos = 0;
 unsigned long elapsed =0;
 int counter = 0;
+bool rotate = false;
+
+
+// 3.25/2  => angka 2 dari rasio 1:2
+// 1.625*200==325
+int countstep = 300;
     // loop
 void loop(){
         // read sensorvalue from pin A0
         float sensorValue = readSensor();
         
-        sensorValue = map(sensorValue,180,900,0,255);
+        sensorValue = map(sensorValue,900,616,0,countstep);
         if(sensorValue<0)sensorValue=0;
+        if(sensorValue>countstep)sensorValue=countstep;
         // Serial.println(sensorValue);
-        
-
-
 
         // if (millis()-elapsed>1000){
         //   counter +=1;
@@ -34,16 +38,17 @@ void loop(){
         //   elapsed = millis();
         // }
 
-
-
-        if (pos !=sensorValue){
+        rotate = false;
+        
+        if ((pos !=sensorValue)&&(abs(sensorValue-pos)>=3)){
+          rotate = true;
             int step;
             if(sensorValue-pos>0){
-                if (pos<255){
+                if (pos<countstep){
                     step = sensorValue-pos;
                     spinMotor(true, step);
                     pos = pos+step;
-                    if (pos>255)pos=255;
+                    if (pos>countstep)pos=countstep;
                 }
             }
             else {
@@ -56,7 +61,11 @@ void loop(){
             }
             
         }
-        Serial.println(pos);
+        Serial.print(pos);
+        Serial.print("  ");
+          Serial.print(rotate);
+        Serial.print("  ");
+        Serial.println(sensorValue );
 
       
  
